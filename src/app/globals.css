@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  /* Light gray palette */
+  --bg:             #f0f0f0;
+  --bg-warm:        #eaeaea;
+  --bg-card:        #ffffff;
+  --bg-card-hover:  #f5f5f5;
+  --bg-surface:     #e8e8e8;
+  --border:         #d0d0d0;
+  --border-accent:  #b8b8b8;
+  --border-warm:    #c4c4c4;
+
+  /* Dark text hierarchy */
+  --text:           #1a1a1a;
+  --text-secondary: #3a3a3a;
+  --text-muted:     #666666;
+  --text-dim:       #999999;
+
+  /* Accent — darker gray for contrast on light bg */
+  --accent:         #444444;
+  --accent-hover:   #333333;
+  --accent-dim:     #888888;
+  --accent-glow:    rgba(68, 68, 68, 0.06);
+
+  /* Semantic — muted tones */
+  --green:          #4a8c3f;
+  --green-dim:      rgba(74, 140, 63, 0.10);
+  --red:            #b84c4c;
+  --red-dim:        rgba(184, 76, 76, 0.10);
+  --yellow:         #8a8a30;
+  --orange:         #b07040;
+
+  /* Marble vein — subtle gray */
+  --marble-vein:    rgba(0, 0, 0, 0.02);
+
+  /* Fonts */
+  --font-heading:   'Cinzel', serif;
+  --font-body:      'Cormorant Garamond', serif;
+  --font-mono:      'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle texture background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 0, 0, 0.008) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 0, 0, 0.01) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(0, 0, 0, 0.006) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-accent); }
+
+/* Headings */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Monospace */
+code, .font-mono {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82em;
+}
+
+/* Inputs & buttons with serif feel */
+input, textarea, select, button {
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+
+/* Select styling */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes chisel {
+  from { opacity: 0; letter-spacing: 0.15em; }
+  to { opacity: 1; letter-spacing: 0.02em; }
+}
+
+.animate-fade-in { animation: fadeIn 0.35s ease-out; }
+.animate-slide-in { animation: slideIn 0.3s ease-out; }
+.animate-chisel { animation: chisel 0.5s ease-out; }
+
+.thinking-dots span {
+  animation: pulse-dot 1.4s infinite;
+}
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Decorative elements ───────────────────────────────────────────────── */
+
+.marble-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-accent) 20%,
+    var(--accent-dim) 50%,
+    var(--border-accent) 80%,
+    transparent 100%
+  );
+}
+
+.greek-ornament::before {
+  content: '⸙';
+  color: var(--accent-dim);
+  margin-right: 0.5em;
+}
+
+.card-marble {
+  background:
+    linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.card-marble::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    var(--marble-vein) 0%,
+    transparent 30%,
+    var(--marble-vein) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Tooltip */
+.tooltip-trigger { position: relative; }
+.tooltip-trigger .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 50;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 280px;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.tooltip-trigger:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
