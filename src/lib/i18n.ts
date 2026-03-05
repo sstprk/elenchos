@@ -15,20 +15,20 @@ const strings = {
   "header.signIn": { en: "SIGN IN", tr: "GİRİŞ" },
 
   // Hero
-  "hero.subtitle": { en: "ΤΟ ΕΛΕΓΧΕΙΝ", tr: "ΤΟ ΕΛΕΓΧΕΙΝ" },
+  "hero.subtitle": { en: "DIALECTICAL AI", tr: "DİYALEKTİK AI" },
   "hero.title": { en: "Challenge Your Ideas", tr: "Fikirlerini Sorgula" },
   "hero.description": {
-    en: "Multiple AI philosophers debate your topic independently, challenge each other, and converge toward well-tested truth.",
-    tr: "Birden fazla yapay zeka filozofu konunu bağımsız olarak tartışır, birbirlerine itiraz eder ve sağlam bir sonuca yakınsar.",
+    en: "Multiple AI agents debate your topic independently, challenge each other, and converge toward well-tested conclusions.",
+    tr: "Birden fazla yapay zeka ajanı konunu bağımsız olarak tartışır, birbirlerine itiraz eder ve sağlam bir sonuca yakınsar.",
   },
   "hero.placeholder": {
-    en: "Pose your question to the assembly...",
-    tr: "Sorunuzu meclise sorun...",
+    en: "Enter a topic to debate...",
+    tr: "Tartışılacak bir konu girin...",
   },
   "hero.begin": { en: "BEGIN", tr: "BAŞLA" },
   "hero.noKeys": {
-    en: "Add at least one API key to summon the philosophers — ",
-    tr: "Filozofları çağırmak için en az bir API anahtarı ekleyin — ",
+    en: "Add at least one API key to start — ",
+    tr: "Başlamak için en az bir API anahtarı ekleyin — ",
   },
   "hero.setKeys": { en: "Set Keys", tr: "Anahtarları Ayarla" },
 
@@ -42,12 +42,12 @@ const strings = {
   // Steering
   "steering.title": { en: "Steer the Discourse", tr: "Tartışmayı Yönlendir" },
   "steering.description": {
-    en: "Your guidance reaches only Athena, who weaves it into her next evaluation.",
-    tr: "Yönlendirmeniz yalnızca Athena'ya ulaşır ve bir sonraki değerlendirmesine yansıtır.",
+    en: "Your guidance reaches the judge, who weaves it into the next evaluation.",
+    tr: "Yönlendirmeniz hakeme ulaşır ve bir sonraki değerlendirmesine yansıtır.",
   },
   "steering.placeholder": {
-    en: "Direct the philosophical inquiry...",
-    tr: "Felsefi soruşturmayı yönlendirin...",
+    en: "Steer the debate...",
+    tr: "Tartışmayı yönlendirin...",
   },
   "steering.send": { en: "Send", tr: "Gönder" },
   "steering.continue": { en: "Continue", tr: "Devam" },
@@ -58,7 +58,7 @@ const strings = {
   "view.speaks": { en: "speaks", tr: "konuşuyor" },
   "view.deliberates": { en: "deliberates", tr: "değerlendiriyor" },
   "view.concludes": { en: "✦ The debate concludes ✦", tr: "✦ Tartışma sona erdi ✦" },
-  "view.thinking": { en: "The philosophers deliberate...", tr: "Filozoflar tartışıyor..." },
+  "view.thinking": { en: "The debaters deliberate...", tr: "Tartışmacılar tartışıyor..." },
   "view.finalVerdict": { en: "Final Verdict", tr: "Son Karar" },
   "view.assessment": { en: "Assessment", tr: "Değerlendirme" },
   "view.agreements": { en: "Agreements", tr: "Uzlaşılar" },
@@ -79,6 +79,7 @@ const strings = {
   "config.tokenEfficient": { en: "Token-efficient", tr: "Token tasarruflu" },
   "config.bestContinuity": { en: "Best continuity", tr: "En iyi süreklilik" },
   "config.add": { en: "+ Add", tr: "+ Ekle" },
+  "config.save": { en: "Save", tr: "Kaydet" },
   "config.barelyAgree": { en: "Barely agree", tr: "Neredeyse anlaşamıyor" },
   "config.fullConsensus": { en: "Full consensus", tr: "Tam uzlaşı" },
   "config.onlyAfterMin": { en: "Only check after minimum rounds", tr: "Yalnızca minimum tur sonrasında kontrol et" },

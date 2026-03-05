@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";import KeysModal from "@/components/KeysModal";
 import ConfigPanel from "@/components/ConfigPanel";
 import DebateView from "@/components/DebateView";
@@ -62,6 +62,11 @@ export default function Home() {
   const [debateId, setDebateId] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const roundsRef = useRef<Round[]>([]);
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  // Whether a debate has been started (input moves to bottom)
+  const hasStarted = isRunning || reports.length > 0 || events.length > 0;
 
   // Hydrate keys from localStorage after mount to avoid SSR mismatch
   useEffect(() => {
@@ -77,6 +82,13 @@ export default function Home() {
       })
       .catch(() => {});
   }, []);
+
+  // Auto-scroll to bottom when new events come in
+  useLayoutEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [events, reports]);
 
   const hasKeys = Object.values(keys).some((k) => k?.trim());
 
@@ -279,63 +291,49 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen relative z-10">
+    <main className="flex flex-col h-screen relative z-10">
       {/* Header */}
-      <header className="px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <Image src="/logo.svg" alt="Elenchus logo" width={150} height={150} className="opacity-80" />
-            <h1
-              className="text-xl tracking-wide text-[var(--accent)]"
-              style={{ fontFamily: "var(--font-heading)", fontWeight: 600 }}
-            >
-              ELENCHOS
-            </h1>
-          </div>
+      <header className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-card)]">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="Elenchos logo" width={28} height={28} className="opacity-90" />
+            <span className="text-base font-semibold text-[var(--text)]">Elenchos</span>
+          </div>
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => setLocale(locale === "en" ? "tr" : "en")}
-              className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--text-muted)] hover:border-[var(--border-accent)] hover:text-[var(--text-secondary)] transition-all"
-              style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
+              className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
             >
               {locale === "en" ? "TR" : "EN"}
             </button>
             {user && (
               <button
                 onClick={() => setShowHistory(true)}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--text-muted)] hover:border-[var(--border-accent)] hover:text-[var(--text-secondary)] transition-all"
-                style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
+                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
               >
                 {t("header.history", locale)}
               </button>
             )}
             <button
-              onClick={() => setShowConfig(!showConfig)}
-              className={`rounded-lg border px-3 py-1.5 text-sm transition-all ${
-                showConfig
-                  ? "border-[var(--accent-dim)] bg-[var(--accent-glow)] text-[var(--accent)]"
-                  : "border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border-accent)] hover:text-[var(--text-secondary)]"
-              }`}
-              style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
+              onClick={() => setShowConfig(true)}
+              className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
             >
               {t("header.config", locale)}
             </button>
             <button
               onClick={() => setShowKeys(true)}
-              className={`rounded-lg border px-3 py-1.5 text-sm transition-all ${
+              className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
                 hasKeys
-                  ? "border-[var(--green)]/30 text-[var(--green)]"
-                  : "border-[var(--orange)]/30 text-[var(--orange)]"
+                  ? "text-[var(--green)] hover:bg-[var(--green-dim)]"
+                  : "text-[var(--orange)] hover:bg-[var(--bg-warm)]"
               }`}
-              style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
             >
               {hasKeys ? t("header.keysSet", locale) : t("header.addKeys", locale)}
             </button>
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--text-muted)] hover:border-[var(--border-accent)] hover:text-[var(--text-secondary)] transition-all"
-                style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
+                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
                 title={user.email}
               >
                 {t("header.signOut", locale)}
@@ -343,144 +341,112 @@ export default function Home() {
             ) : (
               <button
                 onClick={() => setShowAuth(true)}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm text-[var(--text-muted)] hover:border-[var(--border-accent)] hover:text-[var(--text-secondary)] transition-all"
-                style={{ fontFamily: "var(--font-heading)", fontSize: "12px", letterSpacing: "0.06em" }}
+                className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
               >
                 {t("header.signIn", locale)}
               </button>
             )}
           </div>
         </div>
-        <div className="marble-divider max-w-4xl mx-auto mt-4" />
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 py-6">
-        {/* Config Panel */}
-        {showConfig && (
-          <div className="mb-6 card-marble rounded-xl p-5 animate-fade-in">
-            <div className="relative z-10">
-              <h2
-                className="text-sm mb-5"
-                style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.08em", color: "var(--text-dim)" }}
-              >
-                {t("debate.configTitle", locale)}
-              </h2>
-              <ConfigPanel config={config} onChange={setConfig} />
-            </div>
-          </div>
-        )}
-
-        {/* Hero / Topic Input */}
-        {!isRunning && reports.length === 0 && (
-          <div className="animate-fade-in">
-            <div className="text-center mb-10 mt-8">
-              <p
-                className="text-[var(--accent-dim)] text-sm tracking-widest mb-3"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                {t("hero.subtitle", locale)}
-              </p>
-              <h2
-                className="text-3xl mb-4 text-[var(--text)]"
-                style={{ fontFamily: "var(--font-heading)", fontWeight: 500, letterSpacing: "0.02em" }}
-              >
+      {/* Scrollable content area */}
+      <div className="flex-1 overflow-y-auto" ref={scrollAreaRef}>
+        {/* Centered landing state — input in the middle */}
+        {!hasStarted && (
+          <div className="flex flex-col items-center justify-center h-full animate-fade-in px-4">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-semibold text-[var(--text)] mb-2">
                 {t("hero.title", locale)}
               </h2>
-              <p className="text-[var(--text-muted)] max-w-md mx-auto text-base italic">
+              <p className="text-[var(--text-muted)] max-w-md mx-auto text-sm">
                 {t("hero.description", locale)}
               </p>
             </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                startDebate();
-              }}
-              className="max-w-2xl mx-auto"
-            >
-              <div className="relative">
-                <textarea
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder={t("hero.placeholder", locale)}
-                  rows={3}
-                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-3 pr-28 text-base text-[var(--text)] placeholder:text-[var(--text-dim)] placeholder:italic focus:border-[var(--accent-dim)] focus:outline-none resize-none transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={!topic.trim() || !hasKeys}
-                  className="absolute right-3 bottom-3 rounded-lg bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-[var(--bg-card)] hover:bg-[var(--accent-hover)] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-                  style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.06em" }}
-                >
-                  {t("hero.begin", locale)}
-                </button>
-              </div>
-              {!hasKeys && (
-                <p className="text-xs text-[var(--orange)] mt-2 text-center italic">
-                  {t("hero.noKeys", locale)}
-                  <button type="button" onClick={() => setShowKeys(true)} className="underline">
-                    {t("hero.setKeys", locale)}
-                  </button>
-                </p>
-              )}
-            </form>
-
-            {/* Decorative footer */}
-            <div className="flex items-center justify-center gap-3 mt-12 text-[var(--text-dim)]">
-              <div className="marble-divider flex-1 max-w-[80px]" />
-              <span
-                className="text-xs tracking-widest"
-                style={{ fontFamily: "var(--font-heading)" }}
+            <div className="w-full max-w-2xl">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  startDebate();
+                }}
               >
-                {"ΣΩΚΡΑΤΗΣ · ΠΛΑΤΩΝ · ΑΡΙΣΤΟΤΕΛΗΣ"}
-              </span>
-              <div className="marble-divider flex-1 max-w-[80px]" />
+                <div className="flex items-end gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-2.5 focus-within:border-[var(--border-accent)] transition-colors shadow-sm">
+                  <textarea
+                    value={topic}
+                    onChange={(e) => {
+                      setTopic(e.target.value);
+                      e.target.style.height = "auto";
+                      e.target.style.height = Math.min(e.target.scrollHeight, 150) + "px";
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        if (topic.trim() && hasKeys) startDebate();
+                      }
+                    }}
+                    placeholder={t("hero.placeholder", locale)}
+                    rows={1}
+                    className="flex-1 bg-transparent text-sm text-[var(--text)] placeholder:text-[var(--text-dim)] focus:outline-none resize-none leading-6 max-h-[150px]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!topic.trim() || !hasKeys}
+                    className="shrink-0 w-8 h-8 rounded-lg bg-[var(--accent)] text-white flex items-center justify-center hover:bg-[var(--accent-hover)] disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+                {!hasKeys && (
+                  <p className="text-xs text-[var(--text-dim)] mt-2 text-center">
+                    {t("hero.noKeys", locale)}
+                    <button type="button" onClick={() => setShowKeys(true)} className="text-[var(--orange)] underline">
+                      {t("hero.setKeys", locale)}
+                    </button>
+                  </p>
+                )}
+              </form>
             </div>
           </div>
         )}
 
-        {/* Debate Output */}
-        {(isRunning || reports.length > 0) && (
-          <div className="mt-2">
+        {/* Active debate content */}
+        {hasStarted && (
+          <div className="max-w-3xl mx-auto px-4 py-6 animate-fade-in">
             <div className="flex items-center justify-between mb-4">
-              <div>
-                <h2
-                  className="text-sm text-[var(--text-secondary)]"
-                  style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.04em" }}
-                >
-                  {t("debate.onTheMatter", locale)}
-                </h2>
-                <p className="text-base text-[var(--text)] mt-1 italic">{topic}</p>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-[var(--text)] truncate">{topic}</p>
                 {currentRound > 0 && (
                   <span className="text-xs text-[var(--text-dim)]">{t("debate.round", locale)} {currentRound}</span>
                 )}
               </div>
-              {isRunning && (
-                <button
-                  onClick={handleStop}
-                  className="rounded-lg border border-[var(--red)] px-3 py-1.5 text-xs text-[var(--red)] hover:bg-[var(--red)] hover:text-[var(--bg-card)] transition-colors"
-                  style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.06em" }}
-                >
-                  {t("debate.stop", locale)}
-                </button>
-              )}
-              {!isRunning && reports.length > 0 && (
-                <button
-                  onClick={() => {
-                    setEvents([]);
-                    setReports([]);
-                    setAccumulatedRounds([]);
-                    roundsRef.current = [];
-                    setTopic("");
-                    setCurrentRound(0);
-                    setDebateId(null);
-                  }}
-                  className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--text-muted)] hover:border-[var(--accent-dim)] hover:text-[var(--accent)] transition-colors"
-                  style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.06em" }}
-                >
-                  {t("debate.newDebate", locale)}
-                </button>
-              )}
+              <div className="flex items-center gap-2 shrink-0">
+                {isRunning && (
+                  <button
+                    onClick={handleStop}
+                    className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--red)] hover:bg-[var(--red-dim)] transition-colors"
+                  >
+                    {t("debate.stop", locale)}
+                  </button>
+                )}
+                {!isRunning && reports.length > 0 && (
+                  <button
+                    onClick={() => {
+                      setEvents([]);
+                      setReports([]);
+                      setAccumulatedRounds([]);
+                      roundsRef.current = [];
+                      setTopic("");
+                      setCurrentRound(0);
+                      setDebateId(null);
+                    }}
+                    className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
+                  >
+                    {t("debate.newDebate", locale)}
+                  </button>
+                )}
+              </div>
             </div>
             <DebateView
               events={events}
@@ -494,6 +460,7 @@ export default function Home() {
               onFinalize={handleFinalize}
               locale={locale}
             />
+            <div ref={bottomRef} />
           </div>
         )}
       </div>
@@ -509,6 +476,36 @@ export default function Home() {
           }}
           onClose={() => setShowKeys(false)}
         />
+      )}
+
+      {/* Config Modal */}
+      {showConfig && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowConfig(false)} />
+          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] shadow-xl p-6 animate-fade-in">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wide">
+                {t("debate.configTitle", locale)}
+              </h2>
+              <button
+                onClick={() => setShowConfig(false)}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--text-dim)] hover:bg-[var(--bg-warm)] hover:text-[var(--text)] transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+            <ConfigPanel config={config} onChange={setConfig} />
+            <div className="h-px bg-[var(--border)] mt-6 mb-4" />
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowConfig(false)}
+                className="rounded-lg bg-[var(--accent)] px-5 py-2 text-sm font-medium text-white hover:bg-[var(--accent-hover)] transition-all"
+              >
+                {t("config.save", locale)}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Auth Modal */}

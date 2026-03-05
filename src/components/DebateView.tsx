@@ -23,11 +23,10 @@ function PhilosopherAvatar({ name, allNames }: { name: string; allNames: string[
   const phil = debaterNameToPhilosopher(name, allNames);
   return (
     <div
-      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
       style={{
-        background: phil.color + "18",
+        background: phil.color + "14",
         color: phil.color,
-        border: "1px solid " + phil.color + "30",
       }}
     >
       {phil.icon}
@@ -49,9 +48,8 @@ function ConvergenceBadge({ score }: { score: number }) {
         />
       </div>
       <span
-        className="text-xs font-bold min-w-[2rem] text-right"
+        className="text-xs font-bold min-w-[2rem] text-right font-mono"
         style={{
-          fontFamily: "var(--font-heading)",
           color: score >= 7 ? "var(--green)" : score >= 4 ? "var(--accent)" : "var(--red)",
         }}
       >
@@ -73,35 +71,31 @@ function EventCard({
   switch (event.type) {
     case "round_start":
       return (
-        <div className="py-4">
-          <div className="marble-divider" />
-          <p
-            className="text-center text-xs uppercase tracking-[0.25em] text-[var(--text-dim)] mt-3"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            {t("debate.round", locale)} {event.round} {t("view.roundOf", locale)} {event.maxRounds}
-          </p>
+        <div className="py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-[var(--border)]" />
+            <span className="text-xs font-medium text-[var(--text-dim)] px-2">
+              {t("debate.round", locale)} {event.round} {t("view.roundOf", locale)} {event.maxRounds}
+            </span>
+            <div className="flex-1 h-px bg-[var(--border)]" />
+          </div>
         </div>
       );
 
     case "debater_start":
       return (
-        <div className="flex items-center gap-2.5 px-2 py-1.5">
+        <div className="flex items-center gap-2 px-1 py-1">
           <PhilosopherAvatar name={event.name} allNames={allNames} />
-          <span className="text-sm text-[var(--text-dim)] italic">
+          <span className="text-sm text-[var(--text-dim)]">
             <span
-              className="font-semibold not-italic"
-              style={{
-                fontFamily: "var(--font-heading)",
-                fontSize: "13px",
-                color: debaterNameToPhilosopher(event.name, allNames).color,
-              }}
+              className="font-medium"
+              style={{ color: debaterNameToPhilosopher(event.name, allNames).color }}
             >
               {debaterNameToPhilosopher(event.name, allNames).name}
             </span>{" "}
             {t("view.speaks", locale)}
-            <span className="text-xs font-mono not-italic text-[var(--text-dim)] ml-1.5">({event.model})</span>
-            <span className="animate-pulse-dot ml-1">...</span>
+            <span className="text-xs font-mono text-[var(--text-dim)] ml-1.5">({event.model})</span>
+            <span className="animate-pulse ml-1">...</span>
           </span>
         </div>
       );
@@ -109,22 +103,15 @@ function EventCard({
     case "debater_done": {
       const phil = debaterNameToPhilosopher(event.name, allNames);
       return (
-        <div className="card-marble p-4 animate-slide-in">
+        <div className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] p-4 animate-slide-in">
           <div className="flex items-start gap-3">
             <PhilosopherAvatar name={event.name} allNames={allNames} />
             <div className="flex-1 min-w-0">
-              <div className="flex items-baseline gap-2 mb-2">
-                <span
-                  className="font-semibold"
-                  style={{
-                    fontFamily: "var(--font-heading)",
-                    fontSize: "14px",
-                    color: phil.color,
-                  }}
-                >
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-sm font-semibold" style={{ color: phil.color }}>
                   {phil.name}
                 </span>
-                <span className="text-xs text-[var(--text-dim)] italic">{phil.title}</span>
+                <span className="text-xs text-[var(--text-dim)]">{phil.title}</span>
               </div>
               <div className="text-sm text-[var(--text-secondary)] leading-relaxed prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 prose-strong:text-[var(--text)] prose-headings:text-[var(--text)] prose-headings:text-sm prose-headings:mt-3 prose-headings:mb-1">
                 <ReactMarkdown>{event.content}</ReactMarkdown>
@@ -137,46 +124,39 @@ function EventCard({
 
     case "judge_start":
       return (
-        <div className="flex items-center gap-2.5 px-2 py-1.5 mt-2">
+        <div className="flex items-center gap-2 px-1 py-1 mt-1">
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-            style={{
-              background: JUDGE_PERSONA.color + "18",
-              color: JUDGE_PERSONA.color,
-              border: "1px solid " + JUDGE_PERSONA.color + "30",
-            }}
+            className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
+            style={{ background: JUDGE_PERSONA.color + "14", color: JUDGE_PERSONA.color }}
           >
             {JUDGE_PERSONA.icon}
           </div>
-          <span className="text-sm text-[var(--text-dim)] italic">
-            <span
-              className="font-semibold not-italic"
-              style={{ fontFamily: "var(--font-heading)", fontSize: "13px", color: JUDGE_PERSONA.color }}
-            >
+          <span className="text-sm text-[var(--text-dim)]">
+            <span className="font-medium" style={{ color: JUDGE_PERSONA.color }}>
               {JUDGE_PERSONA.name}
             </span>{" "}
             {t("view.deliberates", locale)}
-            <span className="animate-pulse-dot ml-1">...</span>
+            <span className="animate-pulse ml-1">...</span>
           </span>
         </div>
       );
 
     case "debate_complete":
       return (
-        <div className="py-4 text-center">
-          <div className="marble-divider" />
-          <p
-            className="text-sm text-[var(--green)] mt-3 tracking-wide"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            {t("view.concludes", locale)}
-          </p>
+        <div className="py-3 text-center">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-[var(--green)]/20" />
+            <span className="text-sm font-medium text-[var(--green)]">
+              {t("view.concludes", locale)}
+            </span>
+            <div className="flex-1 h-px bg-[var(--green)]/20" />
+          </div>
         </div>
       );
 
     case "error":
       return (
-        <div className="px-3 py-2 rounded-lg border border-[var(--orange)]/20 bg-[var(--orange)]/5 text-sm text-[var(--orange)] italic animate-fade-in">
+        <div className="px-4 py-3 rounded-xl border border-[var(--red)]/15 bg-[var(--red-dim)] text-sm text-[var(--red)] animate-fade-in">
           ⚠ {event.message}
         </div>
       );
@@ -189,25 +169,18 @@ function EventCard({
 function ReportCard({ report, index, total, locale }: { report: StatusReport; index: number; total: number; locale: Locale }) {
   const isLast = index === total - 1;
   return (
-    <div className="card-marble p-4 border-l-2 border-l-[var(--accent-dim)] animate-slide-in">
+    <div className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] border-l-2 border-l-[var(--accent-dim)] p-4 animate-slide-in">
       <div className="flex items-start gap-3">
         <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          style={{
-            background: JUDGE_PERSONA.color + "18",
-            color: JUDGE_PERSONA.color,
-            border: "1px solid " + JUDGE_PERSONA.color + "30",
-          }}
+          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"
+          style={{ background: JUDGE_PERSONA.color + "14", color: JUDGE_PERSONA.color }}
         >
           {JUDGE_PERSONA.icon}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <span
-              className="font-semibold"
-              style={{ fontFamily: "var(--font-heading)", fontSize: "14px", color: JUDGE_PERSONA.color }}
-            >
-              {isLast ? t("view.finalVerdict", locale) : t("debate.round", locale) + " " + report.roundNumber + " \u2014 " + JUDGE_PERSONA.name + "'s " + t("view.assessment", locale)}
+            <span className="text-sm font-semibold" style={{ color: JUDGE_PERSONA.color }}>
+              {isLast ? t("view.finalVerdict", locale) : t("debate.round", locale) + " " + report.roundNumber + " \u2014 " + t("view.assessment", locale)}
             </span>
           </div>
           <ConvergenceBadge score={report.convergenceScore} />
@@ -220,10 +193,7 @@ function ReportCard({ report, index, total, locale }: { report: StatusReport; in
           {/* Agreements */}
           {report.agreements && report.agreements.length > 0 && (
             <div className="mt-3">
-              <h4
-                className="text-xs uppercase tracking-widest text-[var(--green)] mb-1.5"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--green)] mb-1.5">
                 {t("view.agreements", locale)}
               </h4>
               <ul className="space-y-1">
@@ -240,10 +210,7 @@ function ReportCard({ report, index, total, locale }: { report: StatusReport; in
           {/* Disagreements */}
           {report.disagreements && report.disagreements.length > 0 && (
             <div className="mt-3">
-              <h4
-                className="text-xs uppercase tracking-widest text-[var(--red)] mb-1.5"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--red)] mb-1.5">
                 {t("view.disagreements", locale)}
               </h4>
               <ul className="space-y-1">
@@ -275,49 +242,51 @@ function SteeringInput({
 }) {
   const [msg, setMsg] = useState("");
   return (
-    <div className="card-marble p-4 animate-slide-in">
-      <p
-        className="text-sm font-semibold mb-2"
-        style={{ fontFamily: "var(--font-heading)", color: "var(--accent)" }}
-      >
+    <div className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] p-4 animate-slide-in">
+      <p className="text-sm font-semibold text-[var(--text)] mb-1">
         {t("steering.title", locale)}
       </p>
-      <p className="text-xs text-[var(--text-dim)] mb-3 italic">
+      <p className="text-xs text-[var(--text-dim)] mb-3">
         {t("steering.description", locale)}
       </p>
-      <textarea
-        value={msg}
-        onChange={(e) => setMsg(e.target.value)}
-        placeholder={t("steering.placeholder", locale)}
-        className="w-full rounded border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-dim)] focus:border-[var(--accent-dim)] focus:outline-none resize-none"
-        rows={2}
-      />
-      <div className="flex gap-2 mt-2">
+      <div className="flex items-end gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg)] px-3 py-2 focus-within:border-[var(--border-accent)] transition-colors">
+        <textarea
+          value={msg}
+          onChange={(e) => setMsg(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey && msg.trim()) {
+              e.preventDefault();
+              onSteering(msg);
+              setMsg("");
+            }
+          }}
+          placeholder={t("steering.placeholder", locale)}
+          className="flex-1 bg-transparent text-sm text-[var(--text)] placeholder:text-[var(--text-dim)] focus:outline-none resize-none leading-6"
+          rows={1}
+        />
         <button
           onClick={() => {
             onSteering(msg);
             setMsg("");
           }}
           disabled={!msg.trim()}
-          className="rounded-lg px-4 py-1.5 text-sm font-semibold transition-all disabled:opacity-30"
-          style={{
-            fontFamily: "var(--font-heading)",
-            background: "var(--accent-dim)",
-            color: "var(--bg-card)",
-          }}
+          className="shrink-0 w-7 h-7 rounded-lg bg-[var(--accent)] text-white flex items-center justify-center hover:bg-[var(--accent-hover)] disabled:opacity-20 disabled:cursor-not-allowed transition-all"
         >
-          {t("steering.send", locale)}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
         </button>
+      </div>
+      <div className="flex gap-2 mt-3">
         <button
           onClick={onSkip}
-          className="rounded-lg px-4 py-1.5 text-sm text-[var(--text-dim)] hover:text-[var(--text-muted)] transition-colors"
+          className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] hover:bg-[var(--bg-warm)] transition-colors"
         >
           {t("steering.continue", locale)}
         </button>
         <button
           onClick={onFinalize}
-          className="rounded-lg border border-[var(--green)] px-4 py-1.5 text-sm text-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--bg-card)] transition-colors ml-auto"
-          style={{ fontFamily: "var(--font-heading)" }}
+          className="rounded-lg border border-[var(--green)]/30 px-3 py-1.5 text-xs font-medium text-[var(--green)] hover:bg-[var(--green-dim)] transition-colors ml-auto"
         >
           {t("steering.finalize", locale)}
         </button>
@@ -357,7 +326,7 @@ export default function DebateView(props: DebateViewProps) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 pb-4">
       {items.map((item) => (
         <div key={item.key}>{item.el}</div>
       ))}
@@ -367,13 +336,13 @@ export default function DebateView(props: DebateViewProps) {
       )}
 
       {isRunning && !waitingForSteering && (
-        <div className="flex items-center justify-center gap-2 py-4">
+        <div className="flex items-center gap-2.5 py-4 px-1">
           <div className="flex gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-dim)] animate-pulse" style={{ animationDelay: "0s" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-dim)] animate-pulse" style={{ animationDelay: "0.2s" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-dim)] animate-pulse" style={{ animationDelay: "0.4s" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-dim)] animate-pulse" style={{ animationDelay: "0s" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-dim)] animate-pulse" style={{ animationDelay: "0.2s" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-dim)] animate-pulse" style={{ animationDelay: "0.4s" }} />
           </div>
-          <span className="text-sm text-[var(--text-dim)] italic">{t("view.thinking", locale)}</span>
+          <span className="text-sm text-[var(--text-dim)]">{t("view.thinking", locale)}</span>
         </div>
       )}
     </div>

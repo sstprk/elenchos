@@ -48,24 +48,23 @@ export default function KeysModal({ keys, onSave, onClose }: KeysModalProps) {
   const [draft, setDraft] = useState<UserKeys>({ ...keys });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg card-marble rounded-xl p-6 shadow-2xl animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-xl animate-fade-in">
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-semibold"
-                  style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.04em" }}>
+              <h2 className="text-base font-semibold text-[var(--text)]">
                 API Keys
               </h2>
-              <p className="text-sm text-[var(--text-muted)] mt-1 italic">
+              <p className="text-sm text-[var(--text-muted)] mt-1">
                 Keys are stored in your browser only &mdash; never sent to any server but the provider&apos;s.
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-[var(--text-dim)] hover:text-[var(--text)] transition-colors text-xl"
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--text-dim)] hover:bg-[var(--bg-warm)] hover:text-[var(--text)] transition-colors"
             >
-              &times;
+              ✕
             </button>
           </div>
 
@@ -75,9 +74,8 @@ export default function KeysModal({ keys, onSave, onClose }: KeysModalProps) {
               return (
                 <div key={p.id}>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-sm font-medium flex items-center gap-2"
-                           style={{ fontFamily: "var(--font-heading)", fontSize: "14px" }}>
-                      <span className="text-[var(--accent-dim)]">{p.icon}</span>
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <span className="text-[var(--text-dim)]">{p.icon}</span>
                       {p.name}
                       {hasKey && (
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
@@ -116,8 +114,7 @@ export default function KeysModal({ keys, onSave, onClose }: KeysModalProps) {
             </button>
             <button
               onClick={() => onSave(draft)}
-              className="flex-1 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--bg)] hover:bg-[var(--accent-hover)] transition-colors"
-              style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.03em" }}
+              className="flex-1 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-white hover:bg-[var(--accent-hover)] transition-colors"
             >
               Save Keys
             </button>

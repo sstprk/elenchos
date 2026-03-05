@@ -171,16 +171,14 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       {/* Presets */}
       <section>
         <div className="flex items-center mb-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-              style={{ fontFamily: "var(--font-heading)" }}>Presets</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Presets</h3>
           <Info text="Quick configurations that set all debaters and judge to a specific provider. You can customize individual settings after applying." />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {PRESETS.map((p, i) => (
             <button key={p.label} onClick={() => applyPreset(i)}
               className="group rounded-lg border border-[var(--border)] px-3 py-2.5 text-left hover:border-[var(--accent-dim)] hover:bg-[var(--accent-glow)] transition-all">
-              <span className="block text-sm font-semibold text-[var(--text-secondary)] group-hover:text-[var(--accent)]"
-                    style={{ fontFamily: "var(--font-heading)" }}>{p.label}</span>
+              <span className="block text-sm font-semibold text-[var(--text-secondary)] group-hover:text-[var(--accent)]">{p.label}</span>
               <span className="block text-xs text-[var(--text-dim)] mt-0.5">{p.desc}</span>
             </button>
           ))}
@@ -193,8 +191,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       <section>
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center">
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-                style={{ fontFamily: "var(--font-heading)" }}>Debaters</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Debaters</h3>
             <Info text="Each debater is an independent LLM arguing from its own perspective. More debaters = more diverse viewpoints but slower rounds." />
           </div>
           <div className="flex items-center gap-2">
@@ -216,8 +213,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
                     {phil.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="text-sm font-semibold text-[var(--text)]"
-                          style={{ fontFamily: "var(--font-heading)", fontSize: "13px" }}>{phil.name}</span>
+                    <span className="text-sm font-semibold text-[var(--text)]">{phil.name}</span>
                     <span className="text-xs text-[var(--text-dim)] ml-1.5 italic">{phil.title}</span>
                   </div>
                   <button onClick={() => removeDebater(i)} disabled={config.debaters.length <= 2}
@@ -247,8 +243,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       {/* Judge */}
       <section>
         <div className="flex items-center mb-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-              style={{ fontFamily: "var(--font-heading)" }}>Judge</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Judge</h3>
           <Info text="The Judge evaluates all debater responses, scores convergence, and frames the next round. Choose a capable model for best analysis quality." />
         </div>
         <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-warm)] p-3">
@@ -258,8 +253,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
               {JUDGE_PERSONA.icon}
             </div>
             <div>
-              <span className="text-sm font-semibold text-[var(--text)]"
-                    style={{ fontFamily: "var(--font-heading)", fontSize: "13px" }}>{JUDGE_PERSONA.name}</span>
+              <span className="text-sm font-semibold text-[var(--text)]">{JUDGE_PERSONA.name}</span>
               <span className="text-xs text-[var(--text-dim)] ml-1.5 italic">{JUDGE_PERSONA.title}</span>
             </div>
           </div>
@@ -282,8 +276,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       {/* Rounds */}
       <section>
         <div className="flex items-center mb-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-              style={{ fontFamily: "var(--font-heading)" }}>Rounds</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Rounds</h3>
           <Info text="Min: debate always runs at least this many rounds. Max: hard cap. More rounds = deeper exploration but longer runtime." />
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -305,15 +298,13 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       {/* Convergence */}
       <section>
         <div className="flex items-center mb-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-              style={{ fontFamily: "var(--font-heading)" }}>Convergence</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Convergence</h3>
           <Info text="The judge scores agreement (1-10) after each round. When this score meets your threshold, debate ends early. Lower = ends sooner. Higher = forces deeper consensus." />
         </div>
         <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-warm)] p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-[var(--text-secondary)]">Threshold</span>
-            <span className="text-lg font-bold text-[var(--accent)]"
-                  style={{ fontFamily: "var(--font-heading)" }}>{config.convergence.threshold}/10</span>
+            <span className="text-lg font-bold text-[var(--accent)]">{config.convergence.threshold}/10</span>
           </div>
           <input type="range" min={1} max={10} value={config.convergence.threshold}
             onChange={(e) => onChange({ ...config, convergence: { ...config.convergence, threshold: +e.target.value } })}
@@ -335,8 +326,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
       {/* Context Window */}
       <section>
         <div className="flex items-center mb-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--text-dim)]"
-              style={{ fontFamily: "var(--font-heading)" }}>Context Window</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Context Window</h3>
           <Info text="How much history each debater sees. 'Last round' is cheaper on tokens. 'Full history' gives best continuity but may hit context limits." />
         </div>
         <div className="flex gap-2">

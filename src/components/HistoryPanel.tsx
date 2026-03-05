@@ -60,21 +60,18 @@ export default function HistoryPanel({ onLoadDebate, onClose }: HistoryPanelProp
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg max-h-[80vh] card-marble rounded-xl p-6 shadow-2xl animate-fade-in flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-lg max-h-[80vh] rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-xl animate-fade-in flex flex-col">
         <div className="relative z-10 flex flex-col flex-1 min-h-0">
           <div className="flex items-center justify-between mb-5">
-            <h2
-              className="text-lg font-semibold"
-              style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.04em" }}
-            >
+            <h2 className="text-base font-semibold text-[var(--text)]">
               Saved Debates
             </h2>
             <button
               onClick={onClose}
-              className="text-[var(--text-dim)] hover:text-[var(--text)] transition-colors text-xl"
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--text-dim)] hover:bg-[var(--bg-warm)] hover:text-[var(--text)] transition-colors"
             >
-              &times;
+              ✕
             </button>
           </div>
 

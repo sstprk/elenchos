@@ -52,21 +52,18 @@ export default function AuthModal({ onSuccess, onClose }: AuthModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-sm card-marble rounded-xl p-6 shadow-2xl animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-sm rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-xl animate-fade-in">
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">
-            <h2
-              className="text-lg font-semibold"
-              style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.04em" }}
-            >
+            <h2 className="text-base font-semibold text-[var(--text)]">
               {mode === "signin" ? "Sign In" : "Create Account"}
             </h2>
             <button
               onClick={onClose}
-              className="text-[var(--text-dim)] hover:text-[var(--text)] transition-colors text-xl"
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--text-dim)] hover:bg-[var(--bg-warm)] hover:text-[var(--text)] transition-colors"
             >
-              &times;
+              ✕
             </button>
           </div>
 
@@ -105,8 +102,7 @@ export default function AuthModal({ onSuccess, onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--bg)] hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors"
-              style={{ fontFamily: "var(--font-heading)", letterSpacing: "0.03em" }}
+              className="w-full rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-white hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors"
             >
               {loading ? "..." : mode === "signin" ? "Sign In" : "Sign Up"}
             </button>
