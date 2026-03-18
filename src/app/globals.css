@@ -1,42 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Light palette — clean and modern */
-  --bg:             #f7f7f8;
-  --bg-warm:        #f0f0f1;
-  --bg-card:        #ffffff;
-  --bg-card-hover:  #fafafa;
-  --bg-surface:     #ececed;
-  --border:         #e5e5e5;
-  --border-accent:  #d1d1d6;
-  --border-warm:    #dcdce0;
+  /* Dark palette — sophisticated modern slate */
+  --bg:             #0f1115;
+  --bg-warm:        #1a1d24;
+  --bg-card:        #14171c;
+  --bg-card-hover:  #1e2229;
+  --bg-surface:     #252a33;
+  --border:         #2a303c;
+  --border-accent:  #3b4455;
+  --border-warm:    #323846;
 
   /* Text hierarchy */
-  --text:           #0d0d0d;
-  --text-secondary: #374151;
-  --text-muted:     #6b7280;
-  --text-dim:       #9ca3af;
+  --text:           #f0f2f5;
+  --text-secondary: #c9ced6;
+  --text-muted:     #94a0b8;
+  --text-dim:       #6b768a;
 
   /* Accent */
-  --accent:         #0d0d0d;
-  --accent-hover:   #2b2b2b;
-  --accent-dim:     #9ca3af;
-  --accent-glow:    rgba(13, 13, 13, 0.04);
+  --accent:         #3b82f6;
+  --accent-hover:   #60a5fa;
+  --accent-dim:     #1e3a8a;
+  --accent-glow:    rgba(59, 130, 246, 0.1);
 
   /* Semantic */
-  --green:          #16a34a;
-  --green-dim:      rgba(22, 163, 74, 0.08);
-  --red:            #dc2626;
-  --red-dim:        rgba(220, 38, 38, 0.08);
-  --yellow:         #ca8a04;
-  --orange:         #ea580c;
+  --green:          #10b981;
+  --green-dim:      rgba(16, 185, 129, 0.1);
+  --red:            #ef4444;
+  --red-dim:        rgba(239, 68, 68, 0.1);
+  --yellow:         #f59e0b;
+  --orange:         #f97316;
 
   /* Fonts */
-  --font-heading:   'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono:      'JetBrains Mono', monospace;
+  --font-heading:   var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:      var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:      var(--font-geist-mono), monospace;
 }
 
 body {

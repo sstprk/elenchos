@@ -61,7 +61,7 @@ export default function HistoryPanel({ onLoadDebate, onClose }: HistoryPanelProp
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-lg max-h-[80vh] rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-xl animate-fade-in flex flex-col">
+      <div className="w-full max-w-lg max-h-[80vh] rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-2xl animate-fade-in flex flex-col">
         <div className="relative z-10 flex flex-col flex-1 min-h-0">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-base font-semibold text-[var(--text)]">

@@ -103,7 +103,10 @@ function EventCard({
     case "debater_done": {
       const phil = debaterNameToPhilosopher(event.name, allNames);
       return (
-        <div className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] p-4 animate-slide-in">
+        <div
+          className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] border-l-4 p-4 animate-slide-in shadow-md hover:shadow-lg transition-shadow"
+          style={{ borderLeftColor: phil.color }}
+        >
           <div className="flex items-start gap-3">
             <PhilosopherAvatar name={event.name} allNames={allNames} />
             <div className="flex-1 min-w-0">
@@ -169,7 +172,7 @@ function EventCard({
 function ReportCard({ report, index, total, locale }: { report: StatusReport; index: number; total: number; locale: Locale }) {
   const isLast = index === total - 1;
   return (
-    <div className="rounded-xl bg-[var(--bg-card)] border border-[var(--border)] border-l-2 border-l-[var(--accent-dim)] p-4 animate-slide-in">
+    <div className="rounded-xl bg-[var(--bg-surface)] border border-[var(--border)] border-l-2 border-l-[var(--accent-dim)] p-4 animate-slide-in shadow-md hover:shadow-lg transition-shadow">
       <div className="flex items-start gap-3">
         <div
           className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0"

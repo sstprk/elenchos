@@ -291,9 +291,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col h-screen relative z-10">
+    <main className="flex flex-col h-screen relative z-10 bg-gradient-to-br from-[var(--bg)] to-[var(--bg-warm)]">
       {/* Header */}
-      <header className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-card)]">
+      <header className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-card)]/80 backdrop-blur-md shadow-lg">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo.svg" alt="Elenchos logo" width={28} height={28} className="opacity-90" />
@@ -370,7 +370,7 @@ export default function Home() {
                   startDebate();
                 }}
               >
-                <div className="flex items-end gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-2.5 focus-within:border-[var(--border-accent)] transition-colors shadow-sm">
+                <div className="flex items-end gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-2.5 focus-within:border-[var(--border-accent)] transition-colors shadow-xl ring-1 ring-transparent focus-within:ring-[var(--border-accent)]">
                   <textarea
                     value={topic}
                     onChange={(e) => {
@@ -482,7 +482,7 @@ export default function Home() {
       {showConfig && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowConfig(false)} />
-          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] shadow-xl p-6 animate-fade-in">
+          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] shadow-2xl p-6 animate-fade-in">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wide">
                 {t("debate.configTitle", locale)}
