@@ -49,7 +49,7 @@ export default function KeysModal({ keys, onSave, onClose }: KeysModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-xl animate-fade-in">
+      <div className="w-full max-w-lg rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] p-6 shadow-2xl animate-fade-in">
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>

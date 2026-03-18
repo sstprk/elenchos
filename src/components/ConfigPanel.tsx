@@ -177,7 +177,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {PRESETS.map((p, i) => (
             <button key={p.label} onClick={() => applyPreset(i)}
-              className="group rounded-lg border border-[var(--border)] px-3 py-2.5 text-left hover:border-[var(--accent-dim)] hover:bg-[var(--accent-glow)] transition-all">
+              className="group rounded-lg border border-[var(--border)] bg-[var(--bg-surface)] px-3 py-2.5 text-left hover:border-[var(--accent-dim)] hover:bg-[var(--accent-glow)] transition-all shadow-sm">
               <span className="block text-sm font-semibold text-[var(--text-secondary)] group-hover:text-[var(--accent)]">{p.label}</span>
               <span className="block text-xs text-[var(--text-dim)] mt-0.5">{p.desc}</span>
             </button>
@@ -206,7 +206,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
           {config.debaters.map((debater, i) => {
             const phil = getPhilosopher(i);
             return (
-              <div key={i} className="rounded-lg border border-[var(--border)] bg-[var(--bg-warm)] p-3 animate-fade-in">
+              <div key={i} className="rounded-lg border border-[var(--border-accent)] bg-[var(--bg-surface)] p-3 animate-fade-in shadow-sm">
                 <div className="flex items-center gap-2.5 mb-2.5">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
                     style={{ background: phil.color + "18", color: phil.color, border: "1px solid " + phil.color + "30" }}>
@@ -246,7 +246,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
           <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Judge</h3>
           <Info text="The Judge evaluates all debater responses, scores convergence, and frames the next round. Choose a capable model for best analysis quality." />
         </div>
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-warm)] p-3">
+        <div className="rounded-lg border border-[var(--border-accent)] bg-[var(--bg-surface)] p-3 shadow-sm">
           <div className="flex items-center gap-2.5 mb-2.5">
             <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
               style={{ background: JUDGE_PERSONA.color + "18", color: JUDGE_PERSONA.color, border: "1px solid " + JUDGE_PERSONA.color + "30" }}>
@@ -301,7 +301,7 @@ export default function ConfigPanel({ config, onChange }: ConfigPanelProps) {
           <h3 className="text-xs font-semibold uppercase tracking-wide text-[var(--text-dim)]">Convergence</h3>
           <Info text="The judge scores agreement (1-10) after each round. When this score meets your threshold, debate ends early. Lower = ends sooner. Higher = forces deeper consensus." />
         </div>
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-warm)] p-4">
+        <div className="rounded-lg border border-[var(--border-accent)] bg-[var(--bg-surface)] p-4 shadow-sm">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-[var(--text-secondary)]">Threshold</span>
             <span className="text-lg font-bold text-[var(--accent)]">{config.convergence.threshold}/10</span>

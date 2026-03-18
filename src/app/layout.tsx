@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Elenchus — Multi-LLM Debate Orchestrator",
@@ -14,11 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      </head>
-      <body className="relative">{children}</body>
+      <body className={`${inter.variable} ${geistMono.variable} relative antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
